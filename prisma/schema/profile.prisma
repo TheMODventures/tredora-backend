@@ -1,0 +1,21 @@
+// Profile model definition
+
+enum Role {
+  ADMIN
+  CORPORATE
+}
+
+model Profile {
+  id           String   @id @default(uuid())
+  fullName     String
+  role        Role     @default(CORPORATE)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  userId       String     @unique
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  corporate    Corporate?
+  
+  @@map("profiles")
+}
