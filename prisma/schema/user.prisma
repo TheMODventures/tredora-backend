@@ -12,6 +12,7 @@ model User {
   // Relations
   profile Profile?
   tokens  Token[]
+  otps    Otp[]
 
   @@map("users")
 }
