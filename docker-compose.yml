@@ -1,16 +1,33 @@
-
 services:
-  tredora:
-    image: postgres:latest
+  db:
+    image: postgres:16
     container_name: tredora-db
+    restart: always
     environment:
       POSTGRES_USER: user123
       POSTGRES_PASSWORD: password123
       POSTGRES_DB: tredora-db
     ports:
-      - '5430:5432'
+      - "5430:5432" 
     volumes:
       - postgres-data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    container_name: tredora-backend
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://user123:password123@db:5432/tredora-db?schema=public&sslmode=disable"
+      JWT_SECRET: "your-super-secret-jwt-key-change-this-in-production"
+      JWT_EXPIRATION: "7d"
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   postgres-data:
