@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { EmailModule } from './email/email.module';
+import { BankModule } from './bank/bank.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EmailModule } from './email/email.module';
     AuthModule,
     TokenModule,
     EmailModule,
+    BankModule,
   ],
   controllers: [AppController],
   providers: [AppService],

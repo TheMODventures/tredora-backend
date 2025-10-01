@@ -44,36 +44,6 @@ export class EmailController {
     return this.emailService.findByKey(key);
   }
 
-  @Get('render/:key')
-  @ApiOperation({ summary: 'Render email template with variables' })
-  @ApiParam({ name: 'key', description: 'Email template key' })
-  @ApiQuery({ name: 'variables', required: false, description: 'JSON string of template variables' })
-  @ApiResponse({ status: 200, description: 'Rendered email template' })
-  @ApiResponse({ status: 404, description: 'Email template not found' })
-  async renderTemplate(
-    @Param('key') key: string,
-    @Query('variables') variablesJson?: string,
-  ) {
-    let variables = {};
-    if (variablesJson) {
-      try {
-        variables = JSON.parse(variablesJson);
-      } catch (error) {
-        variables = {};
-      }
-    }
-    return this.emailService.renderTemplate(key, variables);
-  }
-
-  @Get(':id')
-  @ApiOperation({ summary: 'Get email template by ID' })
-  @ApiParam({ name: 'id', description: 'Email template ID' })
-  @ApiResponse({ status: 200, description: 'Email template found' })
-  @ApiResponse({ status: 404, description: 'Email template not found' })
-  findOne(@Param('id') id: string) {
-    return this.emailService.findOne(id);
-  }
-
   @Patch(':id')
   @ApiOperation({ summary: 'Update email template' })
   @ApiParam({ name: 'id', description: 'Email template ID' })

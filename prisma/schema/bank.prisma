@@ -1,0 +1,38 @@
+// Bank model definition
+
+enum BankType {
+  CONFIRMING
+  CURRENT
+}
+
+model Bank {
+  id        String   @id @default(uuid())
+  country   String
+  city      String
+  name      String
+  swiftCode String   @unique
+  type      BankType
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  contacts Contact[]
+
+  @@map("banks")
+}
+
+model Contact {
+  id      String @id @default(uuid())
+  name    String
+  phone   String
+  email   String
+
+  // Relations
+  bankId  String
+  bank    Bank   @relation(fields: [bankId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contacts")
+}

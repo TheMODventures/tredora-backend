@@ -88,22 +88,4 @@ export class EmailService {
     return { message: 'Email template deleted successfully' };
   }
 
-  async renderTemplate(key: string, variables: Record<string, any> = {}) {
-    const template = await this.findByKey(key);
-    
-    let renderedSubject = template.subject;
-    let renderedContent = template.content;
-
-    Object.entries(variables).forEach(([varKey, value]) => {
-      const placeholder = `{{${varKey}}}`;
-      renderedSubject = renderedSubject.replace(new RegExp(placeholder, 'g'), String(value));
-      renderedContent = renderedContent.replace(new RegExp(placeholder, 'g'), String(value));
-    });
-
-    return {
-      subject: renderedSubject,
-      content: renderedContent,
-      originalTemplate: template,
-    };
-  }
 }
