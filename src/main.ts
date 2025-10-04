@@ -12,7 +12,6 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1');
 
-  // Setup Swagger documentation
   setupSwagger(app);
 
   app.useGlobalPipes(

@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { EmailModule } from './email/email.module';
 import { BankModule } from './bank/bank.module';
+import { FormBuilderModule } from './form-builder/form-builder.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BankModule } from './bank/bank.module';
     TokenModule,
     EmailModule,
     BankModule,
+    FormBuilderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
