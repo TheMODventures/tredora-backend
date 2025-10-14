@@ -14,6 +14,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagg
 import { BankService } from './bank.service';
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
+import { AddContactDto } from './dto/add-contact.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth-guard';
 
 @ApiTags('Banks')
@@ -67,5 +68,14 @@ export class BankController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   remove(@Param('id') id: string) {
     return this.bankService.remove(id);
+  }
+
+  @Patch(':id/contacts')
+  @ApiOperation({ summary: 'Add contacts to an existing bank' })
+  @ApiResponse({ status: 200, description: 'Contacts successfully added to bank' })
+  @ApiResponse({ status: 404, description: 'Bank not found' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  addContacts(@Param('id') id: string, @Body() addContactDto: AddContactDto) {
+    return this.bankService.addContacts(id, addContactDto);
   }
 }
