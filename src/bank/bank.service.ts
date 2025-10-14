@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, ConflictException } from '@nestjs/common
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateBankDto } from './dto/create-bank.dto';
 import { UpdateBankDto } from './dto/update-bank.dto';
+import { AddContactDto } from './dto/add-contact.dto';
 
 @Injectable()
 export class BankService {
@@ -112,5 +113,29 @@ export class BankService {
     });
 
     return { message: 'Bank deleted successfully' };
+  }
+
+  async addContacts(id: string, addContactDto: AddContactDto) {
+    // Check if bank exists
+    const existingBank = await this.prisma.bank.findUnique({
+      where: { id },
+    });
+
+    if (!existingBank) {
+      throw new NotFoundException('Bank not found');
+    }
+
+    // Append new contacts to the bank
+    return this.prisma.bank.update({
+      where: { id },
+      data: {
+        contacts: {
+          create: addContactDto.contacts,
+        },
+      },
+      include: {
+        contacts: true,
+      },
+    });
   }
 }
