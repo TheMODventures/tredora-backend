@@ -182,7 +182,7 @@ export class AuthService {
     return {
       message: 'OTP has been sent to your email address',
       // Remove this in production - only for testing
-      otp: process.env.NODE_ENV === 'development' ? otp : undefined,
+      otp
     };
   }
 
