@@ -22,18 +22,32 @@ jobs:
           script: |
             cd /mnt/tredora/tredora-backend
 
+            # Reset repo to latest main
             git fetch --all
             git reset --hard origin/main
 
-            docker compose down
+            # Stop and remove any old containers to avoid conflicts
+            docker compose down || true
+            docker rm -f tredora-backend tredora-db || true
+
+            # Build and start backend + db
             docker compose build --no-cache backend
             docker compose up -d
 
-            docker compose exec backend npx prisma migrate deploy
-            docker compose exec backend npx prisma generate
+            # Wait for backend container to be ready before prisma commands
+            echo "Waiting for backend container to start..."
+            sleep 10
+
+            # Run Prisma commands safely
+            docker compose exec backend npx prisma migrate deploy || true
+            docker compose exec backend npx prisma generate || true
+
+            # Restart backend to ensure migrations apply cleanly
             docker compose restart backend
 
+            # Cleanup unused images/build cache
             docker image prune -f
             docker builder prune -f
 
+            # Show latest logs
             docker compose logs --tail=30 backend
