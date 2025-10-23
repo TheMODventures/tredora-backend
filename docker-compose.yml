@@ -28,6 +28,7 @@ services:
       POSTGRES_USER: user123
     ports:
       - "4000:4000"
+      - "4010:4000"
     volumes:
       - .:/app
       - /app/node_modules
