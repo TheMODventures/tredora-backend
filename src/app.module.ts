@@ -9,6 +9,8 @@ import { EmailModule } from './email/email.module';
 import { BankModule } from './bank/bank.module';
 import { FormBuilderModule } from './form-builder/form-builder.module';
 import { GeminiModule } from './gemini/gemini.module';
+import { RequestModule } from './request/request.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { GeminiModule } from './gemini/gemini.module';
     BankModule,
     FormBuilderModule,
     GeminiModule,
+    RequestModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -37,6 +37,7 @@ model FormTemplate {
 
   // Relations
   fields      FormField[]
+  requests    Request[]
 
   @@map("form_templates")
 }
@@ -85,7 +86,7 @@ model FieldOption {
 model FieldValidation {
   id            String             @id @default(uuid())
   ruleType      ValidationRuleType
-  value         String?            // Value for the validation (e.g., "5" for MIN_LENGTH)
+  value         String?            
   errorMessage  String
 
   createdAt     DateTime           @default(now())

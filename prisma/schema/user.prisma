@@ -10,9 +10,10 @@ model User {
   updatedAt DateTime @updatedAt
 
   // Relations
-  profile Profile?
-  tokens  Token[]
-  otps    Otp[]
+  profile  Profile?
+  tokens   Token[]
+  otps     Otp[]
+  requests Request[]
 
   @@map("users")
 }
