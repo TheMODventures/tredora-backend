@@ -29,10 +29,11 @@ jobs:
 
             docker compose build --no-cache backend
             docker compose up -d
-
-            docker exec -i tredora-backend sh -c "npm install && npm run build && npx prisma generate"
+            
+            docker exec tredora-backend npx prisma migrate deploy
+            docker exec tredora-backend npm run build
             
             docker restart tredora-backend
-            
+
             docker image prune -f
             docker builder prune -f
