@@ -24,8 +24,15 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             
+            docker compose down --volumes --remove-orphans
+            docker rmi $(docker images -q tredora-backend-backend) -f || true
+
             docker compose build --no-cache backend
             docker compose up -d
+
+            docker exec -i tredora-backend sh -c "npm install && npm run build && npx prisma generate"
+            
+            docker restart tredora-backend
             
             docker image prune -f
             docker builder prune -f
