@@ -29,8 +29,7 @@ jobs:
 
             docker compose build --no-cache backend
             docker compose up -d
-            
-            docker exec tredora-backend npx prisma migrate deploy
+
             docker exec tredora-backend npm run build
             
             docker restart tredora-backend
