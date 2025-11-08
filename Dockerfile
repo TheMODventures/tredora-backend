@@ -4,9 +4,9 @@ FROM node:22-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy and install dependencies (include dev for build)
+# Copy package files and install dependencies (including prisma)
 COPY package*.json ./
-RUN npm install --include=dev
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
@@ -20,5 +20,8 @@ RUN npm run build
 # Expose app port
 EXPOSE 4000
 
-# Run built app
-CMD ["node", "dist/index.js"]
+# Entrypoint ensures DB + migrations before app start
+ENTRYPOINT ["/app/wait-for-db.sh"]
+
+# Command to start the app
+CMD ["npm", "run", "start:prod"]
