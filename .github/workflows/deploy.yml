@@ -28,7 +28,5 @@ jobs:
             docker compose build --no-cache backend
             docker compose up -d
 
-            docker exec tredora-backend npx prisma migrate status
-
             docker image prune -f
             docker builder prune -f
